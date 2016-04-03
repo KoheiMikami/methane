@@ -7,7 +7,17 @@ Methane.prototype.equilateralTriangle = function () {
 };
 
 Methane.prototype.addMesh = function() {
-  //三角形下
+  var group = new THREE.Object3D();
+
+  //球
+  var sphereGeometry = new THREE.SphereGeometry(30, 30, 30);
+  var sphereMaterial = new THREE.MeshBasicMaterial({
+    color: 0xff0000
+  });
+  var cubeMesh = new THREE.Mesh(sphereGeometry,sphereMaterial);
+  group.add(cubeMesh);
+
+  //三角形
   var material = new THREE.MeshBasicMaterial({
     color: 0xeeee00,
      side: THREE.DoubleSide
@@ -19,8 +29,10 @@ Methane.prototype.addMesh = function() {
   shape.lineTo(0, 100);
   var geometry = new THREE.ShapeGeometry(shape);
   var mesh = new THREE.Mesh(geometry, material);
-  //mesh.rotation.set(Math.PI/2,0,0);
-  return mesh;
+  mesh.rotation.x = Math.PI/2;
+
+  group.add(mesh);
+  return group;
 };
 
 window.onload = function() {
@@ -56,7 +68,7 @@ window.onload = function() {
 
   var methane = new Methane();
   var methaneMesh = methane.addMesh();
-  methaneMesh.rotation.x = Math.PI/2;
+
   scene.add(methaneMesh);
 
   (function animate() {
